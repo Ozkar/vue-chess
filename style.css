@@ -1,0 +1,66 @@
+html,body{
+  height: 100%;
+  width: 100%;
+  background: lightpink;
+  position: relative;
+}
+
+#chessboard{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  display: block;
+  width: 80vw;
+  height: 80vw;
+  background-color: lightgray;
+  max-width: 80vh;
+  max-height: 80vh;
+}
+
+#chessboard ul{
+  position: relative;
+  height: 100%;
+  width: 100%;
+  list-style: none;
+  display: block;
+  box-sizing: border-box;
+  border: 1px solid black;
+  overflow:hidden;
+}
+
+#chessboard ul li{
+  position: relative;
+  display: inline-block;
+  height: 12.5%;
+  width: 12.5%;
+  box-sizing: border-box;
+  text-align: center;
+  vertical-align: middle;
+  overflow:hidden;
+}
+
+.piece {
+  position: relative;
+  padding: 8px;
+  display: table;
+  margin: 0 auto;
+}
+
+.red {
+  background-color: red;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.black-cell{
+  background-color: #000000;
+  color: white;
+}
+
+.white-cell{
+  background-color: #FFFFFF;
+  color: white;
+}

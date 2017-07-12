@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="reset.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="base.js"></script>
+  </head>
+
+  <body>
+    <div id="chessboard">
+      <ul>
+        <li v-for="(cell, index) in flattenCells()" :class="cellClass(index)">
+         <div :class="pieceClass(index)" v-if="!_.isNull(cell)"> {{cell}} </div>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
