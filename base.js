@@ -2,52 +2,77 @@ console.log('hi');
 
 window.onload = function () {
 
-  // var app = new Vue({
-  //   el: '#app',
-  //   data: {
-  //     message: 'Hello Vue!'
-  //   }
-  // });
-
-  var Piece = function(name){
-    this.name = name;
+  class Piece {
+    constructor(name, player){
+      this.name = name;
+      this.player = player;
+      this.class = player == 'p1' ? 'piece blue' : 'piece red';
+    }
   }
 
-  // var cells =  {
-  //       A: [Piece('rook'), Piece('knight'), Piece('bishop'), Piece('queen'), Piece('king'), Piece('bishop'), Piece('knight'), Piece('rook')],
-  //       B: [Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn')],
-  //       C: [null, null, null, null, null, null, null, null],
-  //       D: [null, null, null, null, null, null, null, null],
-  //       E: [null, null, null, null, null, null, null, null],
-  //       F: [null, null, null, null, null, null, null, null],
-  //       G: [Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn')],
-  //       H: [Piece('rook'), Piece('knight'), Piece('bishop'), Piece('queen'), Piece('king'), Piece('bishop'), Piece('knight'), Piece('rook')]
-  //     }
+  class Pawn extends Piece {
+    constructor(player) {
+      super('pawn', player);
+    }
+  }
+
+  class Rook extends Piece {
+    constructor(player) {
+      super('rook', player);
+    }
+  }
+
+  class Knight extends Piece {
+    constructor(player) {
+      super('knight', player);
+    }
+  }
+
+  class Bishop extends Piece {
+    constructor(player) {
+      super('bishop', player);
+    }
+  }
+
+  class Queen extends Piece {
+    constructor(player) {
+      super('queen', player);
+    }
+  }
+
+  class King extends Piece {
+    constructor(player) {
+      super('king', player);
+    }
+  }
+
+  var chessPiece = Vue.component('chess-piece', {
+    props: ['piece'],
+    template: '<div v-on:click="select" :class="piece.class">{{piece.name}}</div>',
+    methods: {
+      select: function(event){
+        $('.piece').removeClass('selected');
+        $(event.target).addClass('selected');
+        console.log('working');
+      }
+    }
+  });
 
   var chessBoard = new Vue({
     el: '#chessboard',
     data: {
-      // cells: {
-      //   A: [Piece('rook'), Piece('knight'), Piece('bishop'), Piece('queen'), Piece('king'), Piece('bishop'), Piece('knight'), Piece('rook')],
-      //   B: [Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn')],
-      //   // C: [null, null, null, null, null, null, null, null],
-      //   // D: [null, null, null, null, null, null, null, null],
-      //   // E: [null, null, null, null, null, null, null, null],
-      //   // F: [null, null, null, null, null, null, null, null],
-      //   G: [Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn'), Piece('pawn')],
-      //   H: [Piece('rook'), Piece('knight'), Piece('bishop'), Piece('queen'), Piece('king'), Piece('bishop'), Piece('knight'), Piece('rook')]
-      // }
       cells: {
-        A: ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'],
-        B: ['pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn'],
+        A: [new Rook('p1'), new Knight('p1'), new Bishop('p1'), new Queen('p1'), new King('p1'), new Bishop('p1'), new Knight('p1'), new Rook('p1')],
+        B: [new Pawn('p1'), new Pawn('p1'), new Pawn('p1'), new Pawn('p1'), new Pawn('p1'), new Pawn('p1'), new Pawn('p1'), new Pawn('p1')],
         C: [null, null, null, null, null, null, null, null],
         D: [null, null, null, null, null, null, null, null],
         E: [null, null, null, null, null, null, null, null],
         F: [null, null, null, null, null, null, null, null],
-        G: ['pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn'],
-        H: ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook']
+        G: [new Pawn('p2'), new Pawn('p2'), new Pawn('p2'), new Pawn('p2'), new Pawn('p2'), new Pawn('p2'), new Pawn('p2'), new Pawn('p2')],
+        H: [new Rook('p2'), new Knight('p2'), new Bishop('p2'), new King('p2'), new Queen('p2'), new Bishop('p2'), new Knight('p2'), new Rook('p2')]
       }
     },
+    components: {chessPiece: chessPiece},
     methods:{
       flattenCells: function(){
         console.log(_.flatten(_.values(this.cells)));
@@ -68,9 +93,7 @@ window.onload = function () {
 
         return ((num % 8) % 2 == 0) ? even : odd;
       },
-      pieceClass: function(num){
-        return num > 30 ? 'piece red' : 'piece blue'
-      }
+
     }
   });
 

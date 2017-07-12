@@ -13,7 +13,7 @@
     <div id="chessboard">
       <ul>
         <li v-for="(cell, index) in flattenCells()" :class="cellClass(index)">
-         <div :class="pieceClass(index)" v-if="!_.isNull(cell)"> {{cell}} </div>
+         <chess-piece :piece='cell' v-if="!_.isNull(cell)"></chess-piece>
         </li>
       </ul>
     </div>
