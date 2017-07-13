@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://unpkg.com/vue"></script>
     <script src="base.js"></script>
   </head>
@@ -13,7 +14,7 @@
     <div id="chessboard">
       <ul>
         <li v-for="(cell, index) in flattenCells()" :class="cellClass(index)">
-         <div :class="pieceClass(index)" v-if="!_.isNull(cell)"> {{cell}} </div>
+         <chess-piece :piece='cell' v-if="!_.isNull(cell)"></chess-piece>
         </li>
       </ul>
     </div>

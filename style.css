@@ -45,6 +45,13 @@ html,body{
   padding: 8px;
   display: table;
   margin: 0 auto;
+  transform: translateY(50%);
+  border-radius: 5px;
+  cursor:pointer;
+}
+
+.piece.selected{
+  background-color:green;
 }
 
 .red {
