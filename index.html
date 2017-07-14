@@ -13,9 +13,9 @@
   <body>
     <div id="chessboard">
       <ul>
-        <li v-for="(cell, index) in flattenCells()" :class="cellClass(index)">
-         <chess-piece :piece='cell' v-if="!_.isNull(cell)"></chess-piece>
-        </li>
+        <template v-for="(row, rIndex) in cells">
+          <li v-for='(cell, cIndex) in row' :class="cellClass(rIndex, cIndex)" v-bind:cell="cell"> <chess-piece :piece='cell' v-if="!_.isNull(cell)"></chess-piece> </li>
+        </template>
       </ul>
     </div>
   </body>
