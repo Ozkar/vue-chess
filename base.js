@@ -7,6 +7,7 @@ window.onload = function () {
       this.name   = name;
       this.player = player;
       this.class  = player == 'p1' ? 'piece blue' : 'piece red';
+      this.available_moves = [];
     }
 
     set_row(num){
@@ -20,10 +21,15 @@ window.onload = function () {
     set_coordinate(row,col){
       this.set_row(row);
       this.set_column(col);
+      this.available_moves = this.calc_available_moves();
     }
 
-    available_moves(){
+    calc_available_moves(){
       return [];
+    }
+
+    valid_move(row,col){
+      return _.map(this.available_moves, function(i){return JSON.stringify(i)}).includes(JSON.stringify([row,col]))
     }
   }
 
@@ -32,7 +38,7 @@ window.onload = function () {
       super('pawn', player);
     }
 
-    available_moves(){
+    calc_available_moves(){
       var coords = [];
 
       if(this.current_row < 7){
@@ -116,13 +122,7 @@ window.onload = function () {
         $(event.target).addClass('selected');
         $(event.target).parent().addClass('selected');
 
-        this.$parent.$data.highlighted_cells = [];
-        for(let i of this.piece.available_moves()){
-          console.log(i);
-          this.$parent.$data.highlighted_cells.push((i[0]*8) + i[1]);
-        }
-
-
+        this.$parent.setSelectedPiece(this.piece);
       }
     }
   });
@@ -130,25 +130,51 @@ window.onload = function () {
   window.App = new Vue({
     el: '#chessboard',
     data: {
-      // cells: {
-      //   A: [new Rook('p1'), new Knight('p1'), new Bishop('p1'), new Queen('p1'), new King('p1'), new Bishop('p1'), new Knight('p1'), new Rook('p1')],
-      //   B: [new Pawn('p1'), new Pawn('p1'), new Pawn('p1'), new Pawn('p1'), new Pawn('p1'), new Pawn('p1'), new Pawn('p1'), new Pawn('p1')],
-      //   C: [null, null, null, null, null, null, null, null],
-      //   D: [null, null, null, null, null, null, null, null],
-      //   E: [null, null, null, null, null, null, null, null],
-      //   F: [null, null, null, null, null, null, null, null],
-      //   G: [new Pawn('p2'), new Pawn('p2'), new Pawn('p2'), new Pawn('p2'), new Pawn('p2'), new Pawn('p2'), new Pawn('p2'), new Pawn('p2')],
-      //   H: [new Rook('p2'), new Knight('p2'), new Bishop('p2'), new King('p2'), new Queen('p2'), new Bishop('p2'), new Knight('p2'), new Rook('p2')]
-      // }
       cells: new Board().cells,
+      selectedPiece: null,
       highlighted_cells: []
     },
     components: {chessPiece: chessPiece},
+    computed: {
+      cellClass: function(){
+        var vm = this;
+        return function(row,col){
+          return {
+            even_row: this.isEven(row), 
+            odd_row:  this.isOdd(row), 
+            even_col: this.isEven(col), 
+            odd_col:  this.isOdd(col) 
+          }
+        }
+      }
+    },
     methods:{
+      setSelectedPiece: function(piece){
+        if(this.selectedPiece == piece){
+          this.selectedPiece = null;
+        }else{
+          this.selectedPiece = piece;
+        }
+      },
+      highlighted: function(row,col){
+        row = parseInt(row);
+        return !_.isNull(this.selectedPiece) ? this.selectedPiece.valid_move(row,col) : null;
+      },
+      isEven: function(num){
+        return num % 2 == 0;
+      },
+      isOdd: function(num){
+        return num % 2 == 1;
+      },
+      move_piece: function(){
+        
+      },
       flattenCells: function(){
         return _.flatten(_.values(this.cells));
       },
-      cellClass: function(row, col){
+      ccellClass: function(row, col){
+
+        this.isEven(row)
         var num = row*8 + col
         var cssClass = '';
 

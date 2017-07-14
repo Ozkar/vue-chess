@@ -38,9 +38,15 @@ html,body{
   text-align: center;
   vertical-align: middle;
   overflow:hidden;
+  color: white;
 }
 
 #chessboard ul li.selected{
+  border: 3px solid #FF4136;
+  cursor: pointer;
+}
+
+#chessboard ul li.highlighted{
   border: 3px solid #FF4136;
   cursor: pointer;
 }
@@ -67,12 +73,28 @@ html,body{
   background-color: #0074D9;
 }
 
+
+.odd_row.odd_col{
+  background-color: #001f3f;
+}
+
+.odd_row.even_col{
+  background-color: #DDDDDD;
+}
+
+.even_row.odd_col{
+  background-color: #DDDDDD;
+}
+
+.even_row.even_col{
+  background-color: #001f3f;
+}
+
+
 .black-cell{
   background-color: #001f3f;
-  color: white;
 }
 
 .white-cell{
   background-color: #DDDDDD;
-  color: white;
 }

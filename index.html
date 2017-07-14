@@ -12,11 +12,14 @@
 
   <body>
     <div id="chessboard">
+      
       <ul>
         <template v-for="(row, rIndex) in cells">
-          <li v-for='(cell, cIndex) in row' :class="cellClass(rIndex, cIndex)" v-bind:cell="cell"> <chess-piece :piece='cell' v-if="!_.isNull(cell)"></chess-piece> </li>
+          <li  v-for='(cell, cIndex) in row' v-bind:class="[cellClass(rIndex, cIndex), {highlighted:highlighted(rIndex, cIndex)}]" > <chess-piece :piece='cell' v-if="!_.isNull(cell)"></chess-piece> </li>
         </template>
       </ul>
+
+      <div v-if="!_.isNull(selectedPiece)" >{{selectedPiece}}</div>
     </div>
   </body>
 </html>
