@@ -98,3 +98,8 @@ html,body{
 .white-cell{
   background-color: #DDDDDD;
 }
+
+.piece.pawn {
+  background-color: none;
+  background-image: url('chess_pieces.png');
+}

@@ -102,11 +102,63 @@ window.onload = function () {
     constructor(player) {
       super('rook', player);
     }
+
+    calc_available_moves(cells){
+      var coords = []
+      if(this.player == 'p1'){
+        
+        // cells[this.current_row]
+
+
+        
+        // [this.current_row, this.current_col]
+        // do {
+          
+
+        // } while()
+
+        // coords.push([this.current_row])
+      }else{
+
+      }
+
+    }
   }
 
   class Knight extends Piece {
     constructor(player) {
       super('knight', player);
+    }
+
+    calc_available_moves(cells){
+      var coords = [];
+
+      coords.push([this.current_row - 2, this.current_column - 1])
+      coords.push([this.current_row - 2, this.current_column + 1])
+
+      coords.push([this.current_row - 1, this.current_column - 2])
+      coords.push([this.current_row - 1, this.current_column + 2])
+
+      coords.push([this.current_row + 1, this.current_column - 2])
+      coords.push([this.current_row + 1, this.current_column + 2])
+
+      coords.push([this.current_row + 2, this.current_column - 1])
+      coords.push([this.current_row + 2, this.current_column + 1])
+
+      // debugger;
+      // coords = _.reject(coords, function(i){
+      //            return ((i[0] < 0 || i[0] > 7 || i[1] < 0 || i[1] > 7) || (!_.isNil(cells[i[0]][i[1]]) && cells[i[0]][i[1]].player == this.player))
+      //          })
+
+      var valid_coords = []
+      var player = this.player
+      _.each(coords, function(i){
+        if(!(i[0] < 0 || i[0] > 7 || i[1] < 0 || i[1] > 7) && !(!_.isNil(cells[i[0]][i[1]]) && cells[i[0]][i[1]].player == player)){
+          valid_coords.push(i);
+        }
+      })
+
+      return valid_coords;
     }
   }
 
@@ -183,8 +235,7 @@ window.onload = function () {
     data: {
       cells: new Board().cells,
       currentPlayer: 'p1',
-      selectedPiece: null,
-      // highlighted_cells: []
+      selectedPiece: null
     },
     components: {chessPiece: chessPiece},
     computed: {
